@@ -57,6 +57,19 @@ topping_acai = ("frutas", "granola", "paçoca", "nutella")
 historico_vendas = []
 
 
+#Iniciando as variáveis para as Promoções do Açaí
+cardapio_promo = {
+        "Tradicional": "34.00",
+        "Especial": "47.00",
+        "Premium": "50.00"
+    }
+
+quantidade = []
+
+dias_da_semana = ['segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado', 'domingo']
+
+
+
 
 while True:
    print('-' * 48 + '\n')
@@ -249,11 +262,49 @@ while True:
     if selecionar_tam in (f'{tamanho_acai}') and adicional_acai in (f'{topping_acai}'):
         print('\n'f'Esse é o resumo do seu pedido: Açaí {selecionar_tam} com {adicional_acai}!')
 
-   elif opcao__definida == '5':
-    print('Promoções')
 
-   elif opcao__definida == 6:
-    print('Formas de Pagamento')
+   elif opcao__definida == '5':
+    print()
+    def calcular_pedido(tamanho_acai, quantidade, dias_da_semana):
+    
+     if tamanho_acai not in cardapio_promo:
+        return "Erro: Tipo de açaí inválido! Escolha entre Tradicional, Especial ou Premium."
+    
+    preco_unitario = cardapio_promo[tamanho_acai]
+    total = preco_unitario * quantidade
+    
+    print(f"\n--- Resumo do Pedido ---")
+    print(f"{quantidade}x Açaí {tamanho_acai} - Valor original: R$ {total:.2f}")
+    
+    if dias_da_semana.lower() in ["terça", "terca"] and tamanho_acai == "tradicional":
+        if quantidade >= 2:
+            total *= 0.85  # Aplica 15% de desconto
+            print("🎉 Promoção Ativada: Terça do Tradicional! (15% de desconto)")
+            
+    elif dias_da_semana.lower() in ["quinta"] and tamanho_acai == "premium":
+        total -= 10.00
+        print("🎉 Promoção Ativada: Quinta Premium! (R$ 10,00 de desconto direto no total)")
+        
+    elif dias_da_semana.lower() in ["sexta", "sábado", "sabado", "domingo"]:
+        if total >= 90.00:
+            total *= 0.90  # Aplica 10% de desconto
+            print("🎉 Promoção Ativada: Combo Fim de Semana! (10% de desconto por superar R$ 90)")
+
+        print(f"Valor Final com Descontos: R$ {total:.2f}")
+
+
+        print(calcular_pedido(tipo_acai="Tradicional", quantidade=2, dia_da_semana="terça"))
+
+        print("-" * 40)
+
+        print(calcular_pedido(tipo_acai="premium", quantidade=1, dia_da_semana="quinta"))
+
+        print("-" * 40)
+
+        print(calcular_pedido(tipo_acai="especial", quantidade=2, dia_da_semana="domingo"))
+
+    elif opcao__definida == 6:
+     print('Formas de Pagamento')
     
    print (f' \n Valor total da compra:R$ {total:.2f} \n')
    print ( '--- Formas de pagamento --- \n')
@@ -306,6 +357,7 @@ while True:
             p2_estoque += qtd_venda
         elif nome_venda.lower() == p3_nome.lower():
             p3_estoque += qtd_venda
+            
     print('Valor pago insuficiente ou opção inválida. Venda cancelada, tente novamente!')
     # Devolve o estoque se a opção de pagamento for inválida
 
@@ -316,12 +368,11 @@ while True:
     elif nome_venda.lower() == p3_nome.lower():
      p3_estoque += qtd_venda
 
+    elif opcao__definida == 7:
+     print('Modos de Entrega')
 
-   elif opcao__definida == 7:
-    print('Modos de Entrega')
-
-   elif opcao__definida == '8':
-    print('\n''Bem-vindo ao Histórico de vendas!''\n')
+    elif opcao__definida == '8':
+     print('\n''Bem-vindo ao Histórico de vendas!''\n')
     
     if historico_vendas == []:
         print('Humm, parece que não foi feita nenhuma venda ainda. Tente novamente!')
@@ -337,8 +388,7 @@ while True:
     print('Contato')
 
    elif opcao__definida == '0':
-      print('Finalizando o programa...')
-      break
-
+    print('Finalizando o programa...')
+    break
    else:
-    print('Humm, Algo deu errado. Tente Novamente!')
+     print('Humm, Algo deu errado. Tente Novamente!')
